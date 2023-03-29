@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryPage extends BasePage {
@@ -19,7 +20,7 @@ public class CategoryPage extends BasePage {
     @FindBy(css = "#sa_container > div > a > div")
     List<WebElement> pictureNames;
 
-    @FindBy(css = "#sa_container > div:nth-child(5) > a")
+    @FindBy(css = "div.post:nth-child(5) > a:nth-child(1) > img:nth-child(3)")
     WebElement tramPath;
 
     @FindBy(css = "#genrebox > span.dot.control.float-l.showextra > span.openclose")
@@ -89,16 +90,26 @@ public class CategoryPage extends BasePage {
 
     @Step("Add picture {0} to the basket")
     public CategoryPage addPictureToBasket(int id) {
-        waitForElementVisible(picturePrices.get(id));
-        basketButtons.get(id).click();
-        closeButton.click();
+        waitForElementVisible(basketButtons.get(id-1));
+        List<WebElement> picturesForBasket = basketButtons.subList(0, id);
+        for (WebElement picture: picturesForBasket
+             ) {
+            picture.click();
+            waitForElementEnable(closeButton);
+            closeButton.click();
+        }
         return this;
     }
 
     @Step("Get {0} picture price")
-    public String getPicturePrice(int id) {
-        waitForElementVisible(picturePrices.get(id));
-        return picturePrices.get(id).getText();
+    public List<String> getPicturePrice(int id) {
+        waitForElementVisible(picturePrices.get(id-1));
+        List<String> pricesText = new ArrayList<>();
+        for (WebElement price : picturePrices.subList(0, id)
+        ) {
+            pricesText.add(price.getText());
+        }
+        return pricesText;
     }
 
     @Step("Open basket page")

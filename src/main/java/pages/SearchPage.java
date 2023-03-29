@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +18,7 @@ public class SearchPage extends BasePage {
         this.testdriver = driver;
         PageFactory.initElements(driver, this);
     }
-
+    @Step("Verify picture name {0}")
     public SearchPage validateName(String name) {
         waitForElementVisible(firstPicture);
         Assert.assertTrue(firstPicture.getText().contains(name));

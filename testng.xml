@@ -2,9 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="4" name="Practice Suite" parallel="classes">
     <listeners>
-        <listener class-name="utils.TestListener"/>
+        <listener class-name="utils.TestListener"></listener>
     </listeners>
     <test name="Test">
+        <parameter name="number" value="3"></parameter>
         <classes>
             <class name="tests.FirstTest"/>
             <class name="tests.SecondTest"/>

@@ -1,24 +1,31 @@
 package tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Listeners;
+import io.qameta.allure.Story;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import utils.TestListener;
-@Listeners({TestListener.class})
+
 public class SecondTest extends BaseTest {
 
-    @Test(priority = 2, description = "Сheck picture genre")
+    // test case:
+    // pre condition: open browser, url,
+    // test steps -- test case : check picture genre
+    // post step: close the browser
+
+    @Test(priority = 2, description = "verifying picture genre")
     @Severity(SeverityLevel.NORMAL)
+    @Description("Test Case Description: Verify picture genre")
+    @Story("Story Name: To check that picture genre is valid")
     public void checkRealism() {
         String category = "Вышитые картины";
-        String genre = "Реализfwfwfм";
+        String genre = "Реализм";
         mainPage.gotoCategory(category).filterByGenre().goToPictureTram().validateGenre(genre);
     }
 
-    @AfterClass
-    public void closePage() {
+    @AfterMethod
+    public void aftermethod() {
         driver.quit();
     }
 }
